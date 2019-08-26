@@ -8,3 +8,13 @@ FROM cptactionhank/atlassian-jira:8.0.2
 COPY --from=glowroot-stage --chown=daemon:daemon /glowroot /glowroot
 COPY --chown=daemon:daemon admin.json /glowroot/
 ENV JAVA_OPTS=-javaagent:/glowroot/glowroot.jar
+
+RUN                          \
+  mkdir -p /glowroot/tmp  && \
+  mkdir -p /glowroot/logs && \
+  mkdir -p /glowroot/data
+
+VOLUME           \
+  /glowroot/tmp  \
+  /glowroot/logs \
+  /glowroot/data
