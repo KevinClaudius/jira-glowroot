@@ -6,15 +6,12 @@ RUN unzip glowroot.zip
 FROM cptactionhank/atlassian-jira:8.0.2
 
 COPY --from=glowroot-stage --chown=daemon:daemon /glowroot /glowroot
-COPY --chown=daemon:daemon admin.json /glowroot/
+COPY --chown=daemon:daemon admin.json /glowroot/vol/conf/
+COPY --chown=daemon:daemon glowroot.properties /glowroot/
 ENV JAVA_OPTS=-javaagent:/glowroot/glowroot.jar
 
 RUN                          \
-  mkdir -p /glowroot/tmp  && \
-  mkdir -p /glowroot/logs && \
-  mkdir -p /glowroot/data
+  mkdir -p /glowroot/vol
 
 VOLUME           \
-  /glowroot/tmp  \
-  /glowroot/logs \
-  /glowroot/data
+  /glowroot/vol
